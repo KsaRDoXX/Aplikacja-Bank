@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bankomat_X.MainPage"
+             x:Name="thisPage"
+>
+
+    <StackLayout>
+        <Label Text="Bankomat" BackgroundColor="White" 
+               TextColor="Black" HorizontalTextAlignment="Center"
+               FontSize="30" Padding="10" Margin="10" />
+        
+        <Grid>
+            <!-- Column 0 -->
+            <Label Text="Kwota" BackgroundColor="Beige" 
+                   TextColor="Black"
+                   HorizontalTextAlignment="Center" 
+                   FontSize="25" Padding="5" Margin="5" Grid.Column="0"
+                   VerticalTextAlignment="Center"/>
+
+            <Entry Grid.Row="1" Placeholder="Wpisz Kwotę" x:Name="KwotaEntry"/>
+            
+            <Button Grid.Row="2" Text="Wypłać" TextColor="LightGray" Clicked="Wyplac"/>
+            <Button Grid.Row="3" Text="Wpłać" TextColor="LightGray" Clicked="Wplac"/>
+            <Button Grid.Row="4" Text="Odsetki" TextColor="LightGray" Clicked="NaliczOdsetki"/>
+
+            <!-- Column 1 -->
+            <Label Text="Konto" 
+                   BackgroundColor="Beige" 
+                   TextColor="Black" HorizontalTextAlignment="Center"
+                   FontSize="25" Padding="5" Margin="5" Grid.Column="1"
+                   VerticalTextAlignment="Center"/>
+
+            <Picker Grid.Column="1" Grid.Row="1" x:Name="AccPicker"
+            SelectedIndexChanged="AccountChanged"
+            BindingContext="{x:Reference thisPage}"
+            ItemsSource="{Binding Accounts}"
+            ItemDisplayBinding="{Binding AccountName}"
+            SelectedIndex="0"/>
+            
+            
+            
+            <Picker Grid.Column="1" Grid.Row="2" 
+                    x:Name="AccountTypePicker"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontSize="18"
+                    BindingContext="{x:Reference thisPage}"
+                    ItemsSource="{Binding accountTypes}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedIndex="0"
+                    SelectedIndexChanged="TypeChanged"
+                    />
+
+
+            <Entry Grid.Column="1" Grid.Row="3" Placeholder="Właściciel" x:Name="OwnerEntry" VerticalTextAlignment="Center" FontSize="18"/>
+            <Button Grid.Row="4" Grid.Column="1" Text="Aktualizuj właściciela" TextColor="LightGray" Clicked="UpdateOwner"/>
+        </Grid>
+        
+        <!-- info -->
+        <Grid Margin="10">
+            <Label Text="Informacje o koncie " FontSize="17" Grid.ColumnSpan="1"/>
+            
+            <Label Text="Właściciel " Grid.Column="0" Grid.Row="1"/>
+            <Label x:Name="OwnerLabel" BindingContext="{x:Reference thisPage}"
+                   Text="{Binding SelectedAccount.Owner.Name}" 
+                   Grid.Column="1" Grid.Row="1"/>
+
+            <Label Text="Rodzaj Lokaty " Grid.Column="0" Grid.Row="2"/>
+            <Label x:Name="LokataLabel"
+                BindingContext="{x:Reference thisPage}"
+                Text="{Binding SelectedAccount.AccountType.Name}"
+                Grid.Column="1" 
+                Grid.Row="2"/>
+
+            <Label Text="Stan Konta " Grid.Column="0" Grid.Row="3"/>
+            <Label   BindingContext="{x:Reference thisPage}"
+                     x:Name="StanLabel"
+                     Text="{Binding SelectedAccount.Balance}"
+                     Grid.Column="1" Grid.Row="3"/>
+
+        </Grid>
+    </StackLayout>
+
+</ContentPage>
+
